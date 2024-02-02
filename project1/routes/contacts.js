@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { MongoClient } = require('mongodb');
-const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri);
+const mongo = require('../db/connect');
 
-router.get('/', async function(req, res) {
+router.get('/', async function(req, res, next) {
     try {
-        await client.connect();
-        const collection = client.db("test").collection("contacts");
+        const client = mongo.getDb()
+        const collection = client.db().collection("contacts");
         const contacts = await collection.find().toArray();
         res.json(contacts);
     } catch (err) {
@@ -16,10 +14,10 @@ router.get('/', async function(req, res) {
     }
 });
 
-router.get('/:id', async function(req, res) {
+router.get('/:id', async function(req, res, next) {
     try {
-        await client.connect();
-        const collection = client.db("test").collection("contacts");
+        const client = mongo.getDb();
+        const collection = client.db().collection("contacts");
         const contact = await collection.findOne({ _id: ObjectId(req.params.id) });
         if (contact) {
             res.json(contact);
