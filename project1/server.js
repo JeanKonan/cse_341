@@ -3,8 +3,11 @@ const myConnection = require('./db/connect');
 const app = express();
 const port = process.env.PORT || 3000;
 
- console.log('Starting server...');
+app.use(express.json());
+console.log('Starting server...');
 app.use('/', require('./routes'));
+
+
 myConnection.initDb((err) => {
   if (err) {
     return;
