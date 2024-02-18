@@ -1,0 +1,16 @@
+
+GET http://localhost:3000/users
+
+###
+
+GET http://localhost:3000/users/
+
+###
+POST http://localhost:3000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Poirreau",
+    "age": "21",
+    "email": "poirreau@email"
+}
