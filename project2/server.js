@@ -11,14 +11,16 @@ app.use(express.json());
 console.log('Starting server...');
 app.use('/', require('./routes'));
 
-router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 mongodb.initDb((err) => {
     if (err) {
+        console.error(err);
         return;
     }
 
+    console.log("DB is started");
     app.listen(port, ()=> {
         console.log(`Server running on port ${port}`)
     });

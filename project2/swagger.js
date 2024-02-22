@@ -5,12 +5,12 @@ const doc = {
     title: 'My API',
     description: 'Temple API'
   },
-  host: 'localhost:3000',
-  schemes: ['http']
+  host: 'cse-341-project-2-57uz.onrender.com',
+  schemes: ['https']
 };
 
 const outputFile = './swagger.json';
-const endpointsFiles = ['./routes/index.js'];
+const endpointsFiles = ['./server.js'];
 
 // generate swagger.json
 swaggerAutogen(outputFile, endpointsFiles, doc);

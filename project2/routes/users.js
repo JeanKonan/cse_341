@@ -3,14 +3,14 @@ const { idRules, validationRules } = require('../middleware/user_validator');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', getAll());
+router.get('/', getAll);
 
-router.get('/:id', idRules(), getSingle());
+router.get('/:id', idRules(), getSingle);
 
-router.post('/', validationRules(), createUser());
+router.post('/', validationRules(), createUser);
 
-router.put('/:id', idRules(), validationRules(), updateUser());
+router.put('/:id', idRules(), validationRules(), updateUser);
 
-router.delete('/:id', idRules(), deleteUser());
+router.delete('/:id', idRules(), deleteUser);
 
 module.exports = router;
