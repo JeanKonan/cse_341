@@ -1,11 +1,16 @@
-const { getAll, getSingle, createUser } = require('../controllers/users');
+const { getAll, getSingle, createUser, updateUser, deleteUser } = require('../controllers/users');
+const { idRules, validationRules } = require('../middleware/user_validator');
 const express = require('express');
 const router = express.Router();
 
 router.get('/', getAll());
 
-router.get('/:id', getSingle());
+router.get('/:id', idRules(), getSingle());
 
-router.post('/', createUser());
+router.post('/', validationRules(), createUser());
+
+router.put('/:id', idRules(), validationRules(), updateUser());
+
+router.delete('/:id', idRules(), deleteUser());
 
 module.exports = router;
