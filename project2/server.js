@@ -11,12 +11,6 @@ const swaggerDocument = require('./swagger.json');
 
 app.use(express.json());
 
-console.log('Starting server...');
-app.use('/', require('./routes'));
-
-app.use('/api-docs', swaggerUi.serve);
-app.get('/api-docs', swaggerUi.setup(swaggerDocument));
-
 const config = {
     authRequired: false,
     auth0Logout: true,
@@ -27,6 +21,21 @@ const config = {
   };
 
 app.use(auth(config));
+
+console.log('Starting server...');
+app.use('/', require('./routes'));
+
+app.use(function (err, req, res, next) {
+    console.log("into error handler");
+    if (err.name === 'UnauthorizedError') {
+        return res.status(401).send({ msg: 'Invalid token' });
+    }
+ 
+    next(err, req, res);
+});
+
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 app.get('/', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
